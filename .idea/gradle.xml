@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="PLATFORM" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="E:/Android/gradle-6.7.1-all/gradle-6.7.1" />
+        <option name="gradleJvm" value="1.8" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/lib_base" />
+            <option value="$PROJECT_DIR$/lib_network" />
+            <option value="$PROJECT_DIR$/lib_voice" />
+            <option value="$PROJECT_DIR$/module_app_manager" />
+            <option value="$PROJECT_DIR$/module_constellation" />
+            <option value="$PROJECT_DIR$/module_developer" />
+            <option value="$PROJECT_DIR$/module_joke" />
+            <option value="$PROJECT_DIR$/module_map" />
+            <option value="$PROJECT_DIR$/module_setting" />
+            <option value="$PROJECT_DIR$/module_voice_setting" />
+            <option value="$PROJECT_DIR$/module_weather" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+        <option name="useQualifiedModuleNames" value="true" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

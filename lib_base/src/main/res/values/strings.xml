@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">ai语音助手</string>
+    <!--标题-->
+    <string name="app_title_weather">天气</string>
+
+    <string name="app_title_app_manager">应用管理</string>
+
+    <string name="app_title_voice_setting">语音设置</string>
+
+    <string name="app_title_system_setting">系统设置</string>
+
+    <string name="app_title_developer">开发者模式</string>
+
+    <string name="app_title_map">地图</string>
+
+    <string name="app_title_joke">笑话</string>
+
+    <string name="app_title_constellation">星座</string>
+
+    <!--固定数据-->
+    <array name="DeveloperListArray">
+        <item>[组件化]</item>
+        <item>跳转应用管理</item>
+        <item>跳转星座</item>
+        <item>跳转笑话</item>
+        <item>跳转地图</item>
+        <item>跳转设置</item>
+        <item>跳转语音设置</item>
+        <item>跳转天气</item>
+        <item>[在线识别]</item>
+        <item>开始识别</item>
+        <item>停止识别</item>
+        <item>取消识别</item>
+        <item>释放识别</item>
+        <item>[本地唤醒]</item>
+        <item>开始唤醒</item>
+        <item>停止唤醒</item>
+        <item>[离线识别]</item>
+        <item>加载离线识别</item>
+        <item>卸载离线识别</item>
+        <item>[百度TTS]</item>
+        <item>百度TTS开始</item>
+        <item>百度TTS暂停</item>
+        <item>百度TTS继续</item>
+        <item>百度TTS停止</item>
+        <item>百度TTS释放</item>
+        <item>[讯飞语音TTS]</item>
+        <item>讯飞语音TTS开始</item>
+        <item>讯飞语音TTS暂停</item>
+        <item>讯飞语音TTS继续</item>
+        <item>讯飞语音TTS停止</item>
+        <item>[功能测试]</item>
+        <item>启动电话</item>
+    </array>
+
+
+</resources>
