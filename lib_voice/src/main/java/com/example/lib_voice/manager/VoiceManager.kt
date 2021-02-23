@@ -25,7 +25,11 @@ object VoiceManager {
 
     //播放
     fun start(text: String) {
-        VoiceTTs.start(text)
+        VoiceTTs.start(text,null)
+    }
+
+    fun start(text: String,mOnTTSResultListener: VoiceTTs.OnTTSResultListener) {
+        VoiceTTs.start(text,mOnTTSResultListener)
     }
 
     //暂停播放

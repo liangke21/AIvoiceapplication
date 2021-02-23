@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".VoicesettingActivity">
+    android:layout_height="match_parent">
+    <!--语速-->
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="语速"
+    android:background="@color/purple_700"
+    android:textColor="@color/white"
+    android:padding="5dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<SeekBar
+    android:layout_margin="15dp"
+    android:id="@+id/bar_voice"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"/>
+
+    <!--音量语速-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="音量"
+        android:background="@color/purple_700"
+        android:textColor="@color/white"
+        android:padding="5dp"/>
+
+    <SeekBar
+        android:layout_margin="15dp"
+        android:id="@+id/bar_voice_volume"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+    <!--发音人-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发音人"
+        android:background="@color/purple_700"
+        android:textColor="@color/white"
+        android:padding="5dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/rv_voice_peope"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn"
+        android:layout_gravity="center"
+        android:textSize="25dp"
+        android:text="测试"/>
+</LinearLayout>

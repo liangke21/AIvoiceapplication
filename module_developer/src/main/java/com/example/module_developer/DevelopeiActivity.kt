@@ -1,6 +1,7 @@
 package com.example.module_developer
 
 
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -8,6 +9,8 @@ import com.example.lib_base.base.BaseActitvity
 import com.example.lib_base.base.adapter.CommonAdapter
 import com.example.lib_base.base.adapter.CommonViewHolder
 import com.example.lib_base.helper.ARouterHelper
+import com.example.lib_base.utils.L
+import com.example.lib_voice.TTs.VoiceTTs
 import com.example.lib_voice.manager.VoiceManager
 import com.example.lib_voice.xunfeiTTS.xunfeiTTs
 import com.example.module_developer.data.DeveloperListData
@@ -24,6 +27,8 @@ class DevelopeiActivity : BaseActitvity() {
     private val mTypeContent = 1
 
     private val mList = ArrayList<DeveloperListData>()
+
+
 
     override fun getLayoutId(): Int {
         return R.layout.activity_developei
@@ -126,17 +131,29 @@ class DevelopeiActivity : BaseActitvity() {
             7 -> ARouterHelper.startActivity(ARouterHelper.PATH_WEATHER)
 //TTs语音测试
             20 -> VoiceManager.start("我是百度语音默认普通女声")
-            21 -> VoiceManager.pause()
-            22 -> VoiceManager.resume()
-            23-> VoiceManager.stop()
-            24 -> VoiceManager.release()
+            21 -> {
+                VoiceManager.start("你好我是小杜", object : VoiceTTs.OnTTSResultListener {
+                    override fun ttsEnd() {
+                        L.i("VoiceTTs.OnTTSResultListener:我是播放结束的回调")
+                    }
+                })
+
+                Toast.makeText(this, "VoiceTTs.OnTTSResultListener:我是播放结束的回调", Toast.LENGTH_SHORT).show()
+
+            }
+            22 -> VoiceManager.pause()
+            23 -> VoiceManager.resume()
+            24-> VoiceManager.stop()
+            25 -> VoiceManager.release()
 //讯飞语音测试
-            26 -> xunfeiTTs.start("我是讯飞语音一菲小姐姐,比百度语音的声音好听")
-            27 -> xunfeiTTs.pause()
-            28 -> xunfeiTTs.resume()
-            29-> xunfeiTTs.stop()
+            27 -> xunfeiTTs.start("我是讯飞语音一菲小姐姐,比百度语音的声音好听")
+            28 -> xunfeiTTs.pause()
+            29 -> xunfeiTTs.resume()
+            30-> xunfeiTTs.stop()
 
         }
     }
+
+
 
 }

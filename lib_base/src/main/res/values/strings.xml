@@ -40,6 +40,7 @@
         <item>卸载离线识别</item>
         <item>[百度TTS]</item>
         <item>百度TTS开始</item>
+        <item>百度TTS开始有回调</item>
         <item>百度TTS暂停</item>
         <item>百度TTS继续</item>
         <item>百度TTS停止</item>

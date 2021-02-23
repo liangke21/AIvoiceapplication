@@ -1,6 +1,7 @@
 package com.example.lib_voice.TTs
 
 import android.content.Context
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.util.Log
 import com.baidu.tts.client.SpeechError
 import com.baidu.tts.client.SpeechSynthesizer
@@ -20,13 +21,18 @@ import com.example.lib_voice.manager.VoiceManager
  */
 object VoiceTTs : SpeechSynthesizerListener {
 
+    /**
+     * 假设:我们有一个需求
+     * 就是当TTs播放结束的时候执行一段 操作
+     */
+
     private var TAG = VoiceTTs::class.java.simpleName //打印日志
 
 
     //TTs对象
     private lateinit var mSpeechSynthesizer: SpeechSynthesizer
 
-
+   private var mOnTTSResultListener:OnTTSResultListener? = null
     //初始化TTs
     fun initTTS(mContext: Context) {
 //初始化对象
@@ -76,6 +82,8 @@ object VoiceTTs : SpeechSynthesizerListener {
 
     override fun onSpeechFinish(p0: String?) {
         Log.i(TAG, "播放结束")
+
+        mOnTTSResultListener?.ttsEnd()
     }
 
     override fun onError(p0: String?, p1: SpeechError?) {
@@ -83,8 +91,11 @@ object VoiceTTs : SpeechSynthesizerListener {
         //合成和播放过程中出错时的回调
     }
 
-    //播放
-    fun start(text: String) {
+
+
+    //播放而且有回调
+    fun start(text: String,mOnTTSResultListener: OnTTSResultListener?) {
+        this.mOnTTSResultListener = mOnTTSResultListener
         mSpeechSynthesizer.speak(text)
     }
 
@@ -106,6 +117,11 @@ object VoiceTTs : SpeechSynthesizerListener {
     //释放
     fun release() {
         mSpeechSynthesizer.release()
+    }
+
+    //提供一个接口监听回调
+    interface OnTTSResultListener{
+        fun ttsEnd()
     }
 
 
