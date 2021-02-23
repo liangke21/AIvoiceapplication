@@ -129,6 +129,11 @@ class DevelopeiActivity : BaseActitvity() {
             5 -> ARouterHelper.startActivity(ARouterHelper.PATH_SETTING)
             6 -> ARouterHelper.startActivity(ARouterHelper.PATH_VOVCE_SETTING)
             7 -> ARouterHelper.startActivity(ARouterHelper.PATH_WEATHER)
+            //在线识别
+            9 -> VoiceManager.startAsr()
+            10 -> VoiceManager.stopAsr()
+            11 -> VoiceManager.cancelAsr()
+            12 -> VoiceManager.releaseAsr()
             //语音唤醒
             14 -> VoiceManager.startWakeUp()
             15 -> VoiceManager.stopWakeUp()

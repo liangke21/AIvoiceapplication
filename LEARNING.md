@@ -13,6 +13,8 @@ kotlin-gradle-dsl脚本
  RecyclerView:万能的适配器的封装
  
  Kotlin : 封装Activity,Log.日志,Fragment
+ 
+ AndPermission : 权限请求
 ##初始化
  IntentService : 短服务/后台初始化
  
