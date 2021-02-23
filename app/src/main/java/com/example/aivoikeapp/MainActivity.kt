@@ -4,6 +4,9 @@ import android.content.Intent
 import com.example.aivoikeapp.service.VoiceService
 import com.example.lib_base.base.BaseActitvity
 import com.example.lib_base.helper.ARouterHelper
+import com.yanzhenjie.permission.Action
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
 
 
 class MainActivity :BaseActitvity() {
@@ -26,9 +29,13 @@ class MainActivity :BaseActitvity() {
     override fun initView() {
    startService(Intent(this, VoiceService::class.java))
 
-ARouterHelper.startActivity(ARouterHelper.PATH_DEVELOPER)
 
 
+        AndPermission.with(this)
+            .runtime()
+            .permission(Permission.RECORD_AUDIO)
+            .onGranted{ ARouterHelper.startActivity(ARouterHelper.PATH_DEVELOPER)}
+            .start()
     }
 }
 

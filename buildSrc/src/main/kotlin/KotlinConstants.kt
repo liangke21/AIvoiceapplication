@@ -12,7 +12,8 @@ object AppConfig{
     //依赖版本
     const val compileSdkVersion=30//依赖版本
     const val buildToolsVersion="30.0.3"//编译工具版本
-    const val  applicationId = "com.example.aivoikeapp"//包名
+    const val  applicationId = "com.example.aivoiceapp"//包名
+
     const val minSdkVersion =21//最小支持sdk
     const val   targetSdkVersion =30 //当前基于Sdk版本
     //版本编码
@@ -35,12 +36,14 @@ object Dependencies{
     const val AROUTER_COMPILER = "com.alibaba:arouter-compiler:1.5.1"
     //Recyclerview
     const val RECYCLERVIEW= "androidx.recyclerview:recyclerview:1.2.0-alpha01"
+
+    const val  ANDPERMISSION ="com.yanzhenjie:permission:2.0.3"
 }
 
 //Module配置
 object ModuleConfig{
     //是否App
-    const val isApp =true
+    const val isApp =false
 
     //包名
     const val MODULE_APP_MANAGER= "com.example.module_app_manager"

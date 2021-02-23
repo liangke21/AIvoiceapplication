@@ -44,6 +44,8 @@ dependencies {
     api(Dependencies.AROUTER)
     //Recyclerview
     api(Dependencies.RECYCLERVIEW)
+    //AndPermission请求权限
+    api(Dependencies.ANDPERMISSION)
 
 
     api(project(":lib_network"))

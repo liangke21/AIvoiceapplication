@@ -129,6 +129,9 @@ class DevelopeiActivity : BaseActitvity() {
             5 -> ARouterHelper.startActivity(ARouterHelper.PATH_SETTING)
             6 -> ARouterHelper.startActivity(ARouterHelper.PATH_VOVCE_SETTING)
             7 -> ARouterHelper.startActivity(ARouterHelper.PATH_WEATHER)
+            //语音唤醒
+            14 -> VoiceManager.startWakeUp()
+            15 -> VoiceManager.stopWakeUp()
 //TTs语音测试
             20 -> VoiceManager.TTstart("我是百度语音默认普通女声")
             21 -> {
@@ -150,6 +153,7 @@ class DevelopeiActivity : BaseActitvity() {
             28 -> xunfeiTTs.pause()
             29 -> xunfeiTTs.resume()
             30-> xunfeiTTs.stop()
+
 
         }
     }
