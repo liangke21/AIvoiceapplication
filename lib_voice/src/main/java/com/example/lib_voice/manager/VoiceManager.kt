@@ -1,6 +1,7 @@
 package com.example.lib_voice.manager
 
 import android.content.Context
+import com.baidu.tts.client.SpeechSynthesizer
 import com.example.lib_voice.TTs.VoiceTTs
 
 /**
@@ -24,33 +25,55 @@ object VoiceManager {
 
 
     //播放
-    fun start(text: String) {
+    fun TTstart(text: String) {
         VoiceTTs.start(text,null)
     }
 
-    fun start(text: String,mOnTTSResultListener: VoiceTTs.OnTTSResultListener) {
+    fun TTstart(text: String,mOnTTSResultListener: VoiceTTs.OnTTSResultListener) {
         VoiceTTs.start(text,mOnTTSResultListener)
     }
 
     //暂停播放
-    fun pause() {
+    fun TTSpause() {
         VoiceTTs.pause()
     }
 
     //继续播放
-    fun resume() {
+    fun TTSresume() {
         VoiceTTs.resume()
     }
 
     //停止播放
-    fun stop() {
+    fun TTSstop() {
         VoiceTTs.stop()
     }
 
     //释放
-    fun release() {
+    fun TTSrelease() {
         VoiceTTs.release()
     }
+
+
+
+
+    //设置发声人
+    fun setVicepeople(string: String) {
+        VoiceTTs.setVicepeople( string)
+    }
+
+    //设置语速
+    fun setVicecpeed(string: String) {
+
+        VoiceTTs.setVicecpeed( string)
+
+    }
+
+    //设置音量
+    fun setViceVolume(string: String) {
+        VoiceTTs.setViceVolume( string)
+
+    }
+
 
 
 }

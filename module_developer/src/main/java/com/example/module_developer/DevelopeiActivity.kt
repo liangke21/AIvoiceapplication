@@ -130,9 +130,9 @@ class DevelopeiActivity : BaseActitvity() {
             6 -> ARouterHelper.startActivity(ARouterHelper.PATH_VOVCE_SETTING)
             7 -> ARouterHelper.startActivity(ARouterHelper.PATH_WEATHER)
 //TTs语音测试
-            20 -> VoiceManager.start("我是百度语音默认普通女声")
+            20 -> VoiceManager.TTstart("我是百度语音默认普通女声")
             21 -> {
-                VoiceManager.start("你好我是小杜", object : VoiceTTs.OnTTSResultListener {
+                VoiceManager.TTstart("你好我是小杜", object : VoiceTTs.OnTTSResultListener {
                     override fun ttsEnd() {
                         L.i("VoiceTTs.OnTTSResultListener:我是播放结束的回调")
                     }
@@ -141,10 +141,10 @@ class DevelopeiActivity : BaseActitvity() {
                 Toast.makeText(this, "VoiceTTs.OnTTSResultListener:我是播放结束的回调", Toast.LENGTH_SHORT).show()
 
             }
-            22 -> VoiceManager.pause()
-            23 -> VoiceManager.resume()
-            24-> VoiceManager.stop()
-            25 -> VoiceManager.release()
+            22 -> VoiceManager.TTSpause()
+            23 -> VoiceManager.TTSresume()
+            24-> VoiceManager.TTSstop()
+            25 -> VoiceManager.TTSrelease()
 //讯飞语音测试
             27 -> xunfeiTTs.start("我是讯飞语音一菲小姐姐,比百度语音的声音好听")
             28 -> xunfeiTTs.pause()

@@ -32,7 +32,8 @@ object VoiceTTs : SpeechSynthesizerListener {
     //TTs对象
     private lateinit var mSpeechSynthesizer: SpeechSynthesizer
 
-   private var mOnTTSResultListener:OnTTSResultListener? = null
+    private var mOnTTSResultListener: OnTTSResultListener? = null
+
     //初始化TTs
     fun initTTS(mContext: Context) {
 //初始化对象
@@ -50,15 +51,34 @@ object VoiceTTs : SpeechSynthesizerListener {
 
         //其他参数
         //发声人
-        mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, 0.toString())
+        setVicecpeed(0.toString())
         //语速
-        mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_VOLUME, 5.toString())
+        setVicecpeed(5.toString())
         //音量
-        mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_PITCH, 5.toString())
+        setViceVolume(5.toString())
         //初始化
         mSpeechSynthesizer.initTts(TtsMode.ONLINE)//在线的
 
     }
+
+    //设置发声人
+    fun setVicepeople(string: String) {
+        mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, string)
+    }
+
+    //设置语速
+    fun setVicecpeed(string: String) {
+
+        mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_PITCH,string)
+
+    }
+
+    //设置音量
+    fun setViceVolume(string: String) {
+        mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_VOLUME, string)
+
+    }
+
 
     override fun onSynthesizeStart(p0: String?) {
         Log.i(TAG, "合成开始")
@@ -92,9 +112,8 @@ object VoiceTTs : SpeechSynthesizerListener {
     }
 
 
-
     //播放而且有回调
-    fun start(text: String,mOnTTSResultListener: OnTTSResultListener?) {
+    fun start(text: String, mOnTTSResultListener: OnTTSResultListener?) {
         this.mOnTTSResultListener = mOnTTSResultListener
         mSpeechSynthesizer.speak(text)
     }
@@ -120,7 +139,7 @@ object VoiceTTs : SpeechSynthesizerListener {
     }
 
     //提供一个接口监听回调
-    interface OnTTSResultListener{
+    interface OnTTSResultListener {
         fun ttsEnd()
     }
 
