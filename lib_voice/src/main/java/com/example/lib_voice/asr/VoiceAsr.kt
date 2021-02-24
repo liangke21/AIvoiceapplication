@@ -7,6 +7,7 @@ import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
 import com.example.lib_voice.TTs.VoiceTTs
 import com.example.lib_voice.wakeup.VoiceWakeUp
+import com.example.lib_voice.xunfeiTTS.xunfeiTTs
 import org.json.JSONObject
 
 /**

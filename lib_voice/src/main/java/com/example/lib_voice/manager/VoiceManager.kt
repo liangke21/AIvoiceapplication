@@ -6,8 +6,9 @@ import com.baidu.speech.EventListener
 import com.baidu.speech.asr.SpeechConstant
 import com.example.lib_voice.TTs.VoiceTTs
 import com.example.lib_voice.asr.VoiceAsr
+import com.example.lib_voice.impl.OnAsrResuLtListener
 import com.example.lib_voice.wakeup.VoiceWakeUp
-import kotlin.math.log
+import org.json.JSONObject
 
 /**
  * 作者: 13967
@@ -23,8 +24,12 @@ object VoiceManager : EventListener {
     const val VOICE_APP_SECRET = "HIqiojt81tuQjGWVjion4GjmUkamjh3j"
 
     private var TAG = VoiceManager::class.java.simpleName
+  //接口
+  private lateinit var mOnAsrResuLtListener: OnAsrResuLtListener
 
-    fun initManager(mContext: Context) {
+    fun initManager(mContext: Context, mOnAsrResuLtListener:OnAsrResuLtListener) {
+
+        this.mOnAsrResuLtListener = mOnAsrResuLtListener
         //初始化语音合成
         VoiceTTs.initTTS(mContext)
         //初始化本地唤醒
@@ -136,23 +141,25 @@ object VoiceManager : EventListener {
 
 
             when(name){
-               SpeechConstant.CALLBACK_EVENT_WAKEUP_READY -> Log.i(TAG,"唤醒准备就绪")
-                SpeechConstant.CALLBACK_EVENT_ASR_BEGIN -> Log.i(TAG,"开始说话")
-                SpeechConstant.CALLBACK_EVENT_ASR_END-> Log.i(TAG,"结束说话")
+               SpeechConstant.CALLBACK_EVENT_WAKEUP_READY -> mOnAsrResuLtListener.wakeUpReady()//唤醒准备就绪
+                SpeechConstant.CALLBACK_EVENT_ASR_BEGIN -> mOnAsrResuLtListener.asrSrartSpeak()//开始说话
+                SpeechConstant.CALLBACK_EVENT_ASR_END-> mOnAsrResuLtListener.asrStopSpeak()//结束说话
             }
 
         if (params==null){
             return
         }
+
+        val allIson = JSONObject(params)
         when(name){
-            SpeechConstant.CALLBACK_EVENT_WAKEUP_SUCCESS -> VoiceManager.TTstart("我在")
+            SpeechConstant.CALLBACK_EVENT_WAKEUP_SUCCESS -> mOnAsrResuLtListener.wakeUpSuccess(allIson) // 唤醒后的回调
             SpeechConstant.CALLBACK_EVENT_WAKEUP_ERROR -> Log.i(TAG,"唤醒失败")
-            SpeechConstant.CALLBACK_EVENT_ASR_READY-> Log.i(TAG,"ASR准备就绪")
-            SpeechConstant.CALLBACK_EVENT_ASR_FINISH-> Log.i(TAG,"ASR识别结束${params}")
+            SpeechConstant.CALLBACK_EVENT_ASR_FINISH -> mOnAsrResuLtListener.asrREsult(allIson)
             SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL->{
                 data?.let {
-                    val nlu = String(data,offset,length)
+                    val nlu = JSONObject(String(data,offset,length))
                     Log.e(TAG,"ASR动作识别结果:${nlu}")
+                    mOnAsrResuLtListener.nluResult(nlu)
 
                 }
             }

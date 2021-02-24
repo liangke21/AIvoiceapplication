@@ -7,6 +7,7 @@ import com.example.lib_base.utils.L
 import com.example.lib_base.utils.SpUtils
 import com.example.lib_voice.manager.VoiceManager
 import com.example.lib_voice.xunfeiTTS.xunfeiTTs
+import com.imooc.lib_voice.words.WordsTools
 
 /**
  * 作者: 13967
@@ -27,9 +28,12 @@ class InitService:IntentService(InitService::class.java.simpleName) {
         //通知栏初始化
         NotificationHelper.initHelper(this)
        //TTS语音在线合成初始化
-        VoiceManager.initManager(this)
+      //去前台初始化了  VoiceManager.initManager(this)
        //讯飞tts语音
         xunfeiTTs.initialled(this)
+
+        //词条初始化
+            WordsTools.initTools(this)
 
     }
 

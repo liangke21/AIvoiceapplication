@@ -1,9 +1,7 @@
 package com.example.lib_voice.xunfeiTTS
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import com.iflytek.cloud.*
 
@@ -22,7 +20,10 @@ object xunfeiTTs {
 
 
     // 默认发音人
-    private const val voicer = "x2_yifei"  //2021-03-06 有效期
+   // private const val voicer = "x2_yifei"  //2021-03-06 有效期
+    private const val voicer ="x2_xiaorong"
+//播放有回调接口
+   private  var mXFOnTTSResultListener:XFOnTTSResultListener? = null
 
 
     fun initialled(context: Context) {
@@ -44,6 +45,10 @@ object xunfeiTTs {
         mTts.setParameter(SpeechConstant.PITCH, 50.toString())
         //设置合成音量
         mTts.setParameter(SpeechConstant.VOLUME, 50.toString())
+
+
+        //初始化语音识别
+        //初始化语音识别
 
 
     }
@@ -76,6 +81,8 @@ object xunfeiTTs {
         }
 
         override fun onCompleted(error: SpeechError?) {
+            Log.i(TAG, "完成时")
+            mXFOnTTSResultListener?.ttsEnd()
         }
 
         override fun onEvent(eventType: Int, arg1: Int, arg2: Int, obj: Bundle) {
@@ -86,6 +93,12 @@ object xunfeiTTs {
 
     //播放
     fun start(text: String) {
+        mTts.startSpeaking(text, mTtsListener)
+    }
+
+    //播放并且回调
+    fun start(text: String, mXFOnTTSResultListener: XFOnTTSResultListener) {
+        this.mXFOnTTSResultListener = mXFOnTTSResultListener
         mTts.startSpeaking(text, mTtsListener)
     }
 
@@ -105,6 +118,11 @@ object xunfeiTTs {
     }
 
 
+
+    //提供一个接口监听回调
+    interface XFOnTTSResultListener {
+        fun ttsEnd()
+    }
 
 
 }

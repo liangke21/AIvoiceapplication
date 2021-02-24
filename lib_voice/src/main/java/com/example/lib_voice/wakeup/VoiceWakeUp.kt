@@ -33,6 +33,8 @@ private lateinit var  wp: EventManager
     //this是Activity或其它Context类
     //注册输出
     wp.registerListener(listener)
+
+    startWakeUp() //默认启动
     }
     //启动唤醒
     fun startWakeUp(){
