@@ -30,8 +30,11 @@ android {
 
 dependencies {
 
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    //retrofit2网络矿建
+    api(Dependencies.RETROFIT)
+    api(Dependencies.RETROFIT_GSON)
 
 
 }

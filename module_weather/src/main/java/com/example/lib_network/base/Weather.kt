@@ -1,4 +1,4 @@
-package com.example.module_weather.base
+package com.example.lib_network.base
 
 import com.example.lib_base.base.BaseApp
 

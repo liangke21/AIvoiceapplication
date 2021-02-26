@@ -36,8 +36,13 @@ object Dependencies{
     const val AROUTER_COMPILER = "com.alibaba:arouter-compiler:1.5.1"
     //Recyclerview
     const val RECYCLERVIEW= "androidx.recyclerview:recyclerview:1.2.0-alpha01"
-
+    //请求权限
     const val  ANDPERMISSION ="com.yanzhenjie:permission:2.0.3"
+   //retrofit2网络框架
+    const val RETROFIT =  "com.squareup.retrofit2:retrofit:2.9.0"
+    //retrofit2网络框架 json解析
+    const val RETROFIT_GSON =  "com.squareup.retrofit2:converter-gson:2.8.1"
+
 }
 
 //Module配置

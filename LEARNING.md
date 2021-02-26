@@ -22,4 +22,9 @@ kotlin-gradle-dsl脚本
  
  Application  : 应用初始化
  
+ ##百度AI语音
  
+ TTS 在线语音合成
+ 语音唤醒
+ 语音识别
+##网络框架 

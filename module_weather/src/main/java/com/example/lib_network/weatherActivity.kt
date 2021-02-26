@@ -1,7 +1,5 @@
-package com.example.module_weather
+package com.example.lib_network
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.lib_base.base.BaseActitvity
 import com.example.lib_base.helper.ARouterHelper
