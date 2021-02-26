@@ -6,6 +6,7 @@
 
 
     <application
+        android:usesCleartextTraffic="true"
         android:name="com.example.lib_base.base.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

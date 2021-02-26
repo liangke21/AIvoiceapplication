@@ -4,9 +4,14 @@ import android.content.Intent
 import com.example.aivoikeapp.service.VoiceService
 import com.example.lib_base.base.BaseActitvity
 import com.example.lib_base.helper.ARouterHelper
+import com.example.lib_network.HttpManager
 import com.yanzhenjie.permission.Action
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.runtime.Permission
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MainActivity :BaseActitvity() {
@@ -36,6 +41,21 @@ class MainActivity :BaseActitvity() {
             .permission(Permission.RECORD_AUDIO)
             .onGranted{ ARouterHelper.startActivity(ARouterHelper.PATH_DEVELOPER)}
             .start()
+        testweather()
+    }
+
+
+    private fun testweather(){
+        HttpManager.queryWeather("北京").enqueue(object : Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+            }
+        })
     }
 }
 
