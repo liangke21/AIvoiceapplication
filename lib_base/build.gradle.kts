@@ -46,7 +46,10 @@ dependencies {
     api(Dependencies.RECYCLERVIEW)
     //AndPermission请求权限
     api(Dependencies.ANDPERMISSION)
-
+    //viewpager
+    api(Dependencies.VIEWPAGER)
+    //谷歌材料库
+    api(Dependencies.MATERIAL)
 
     api(project(":lib_network"))
     api(project(":lib_voice"))

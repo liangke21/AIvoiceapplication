@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">AI语音助手</string>
+
+
+    <!--主页列表颜色-->
+    <array name="MainColorArray">
+        <item>@color/colorWeather</item>
+        <item>@color/colorConstell</item>
+        <item>@color/colorJoke</item>
+        <item>@color/colorMap</item>
+        <item>@color/colorAppManager</item>
+        <item>@color/colorVoiceSetting</item>
+        <item>@color/colorAppSystemSetting</item>
+        <item>@color/colorAppDeveloper</item>
+    </array>
+
+    <!--主页列表图标-->
+    <string-array name="MainIconArray">
+        <item>@drawable/img_main_weather</item>
+        <item>@drawable/img_mian_contell</item>
+        <item>@drawable/img_main_joke_icon</item>
+        <item>@drawable/img_main_map_icon</item>
+        <item>@drawable/img_main_app_manager</item>
+        <item>@drawable/img_main_voice_setting</item>
+        <item>@drawable/img_main_system_setting</item>
+        <item>@drawable/img_main_developer</item>
+    </string-array>
+
 </resources>

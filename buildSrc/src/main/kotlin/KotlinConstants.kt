@@ -42,6 +42,10 @@ object Dependencies{
     const val RETROFIT =  "com.squareup.retrofit2:retrofit:2.9.0"
     //retrofit2网络框架 json解析
     const val RETROFIT_GSON =  "com.squareup.retrofit2:converter-gson:2.8.1"
+    //viewpager
+    const val VIEWPAGER = "com.zhy:magic-viewpager:1.0.1"
+   //谷歌材料库
+    const val MATERIAL = "com.google.android.material:material:1.0.0"
 
 }
 
