@@ -1,47 +1,34 @@
+##组件化
+build.gradle.kts 配置
 
-1.核心思想 (技术)
+##buildSrc配置
+kotlin-gradle-dsl脚本
 
-Kotlin + 组件化 + Kotlin Gradle DsL
-
-# Kotlin Gradle DsL 是什么
-
-传统Gradle - 是Groovy语言编写的
-
-Kotlin Gradle - 是 Kotlin编写的
-https://docs.gradle.org/current/userguide/kotlin_dsl.html
-
-buildSrc构建
-build.gradle.kts//
-
-plugins {
-    `kotlin-dsl`
-}
-repositories{
-    jcenter()
-}
-
-##组件化app
-远古应用:App(一堆代码)
-
-##构建组件化App
-
-App
-Module 笑话 地图 星座 语音设置 系统设置 天气 应用管理 开发者模式
-lib lib_base lib_network lib_voice 
-##EventBus
-https://github.com/greenrobot/EventBus/
-##ARouter
-https://github.com/alibaba/ARouter
-
-##5.服务保活
-- 1.系统自带,系统做了一些友好的保活 - FLAG
-  /**
-     *START_STICKY:当系统内存不足的时候,杀掉服务,那么在系统紧张的时候才启动服务
-     * START_NOT_STICKY: 当系统内存不足的时候,杀掉了服务,直达下一次startServicece才启动
-     * START_REDELIVER_INTENT: 重新传递Intent值
-     * START_STICKY_COMPATIBILITY: START_STICKY兼容版本,但是它也不能保证系统killd掉服务一定能重启
-     */
-     
- - 5.前台服务  
- - 我在前台运行,我绑定通知栏,在服务中创建通知栏  
-     
+ 组件化管理
+##项目配置
+ EventBus:组件通讯
+ 
+ ARouter:软路由跳转
+  
+ Kotlin : 封装Activity,Log.日志,Fragment
+ 
+ AndPermission : 权限请求
+##初始化
+ IntentService : 短服务/后台初始化
+ 
+ Service的常规保活 : 前台初始化  
+ 
+ Application  : 应用初始化
+ 
+ ##百度AI语音
+ 
+ TTS 在线语音合成
+ 语音唤醒
+ 语音识别
+##网络框架 
+Retrofit网络矿建
+拦截器
+##UI
+ViewPager
+WindowManager 窗口
+RecyclerView:万能的适配器的封装  
