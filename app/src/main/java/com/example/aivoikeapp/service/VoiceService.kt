@@ -21,6 +21,7 @@ import java.util.*
  * 描述: 语音服务
  */
 class VoiceService : Service(), OnNluResultListener {
+    private val TGA = VoiceService::class.java.simpleName
     override fun onBind(intent: Intent?): IBinder? {
         return null//用不上说以返回空
     }
@@ -28,7 +29,7 @@ class VoiceService : Service(), OnNluResultListener {
 
     override fun onCreate() {
         super.onCreate()
-        L.i("语音启动服务")
+        L.i("${TGA}:语音启动服务")
         initService()
         //初始化语音服务
         initCoreVoiceService()
@@ -64,12 +65,12 @@ class VoiceService : Service(), OnNluResultListener {
     }
 
     //初始化语音服务
-    fun initCoreVoiceService(){
-
+  private  fun initCoreVoiceService(){
+        L.i("${TGA}:语音启动服务2")
        VoiceManager.initManager(this,object : OnAsrResuLtListener{
 
            override fun wakeUpReady() {
-              L.i("唤醒就绪")
+              L.i("${TGA}:唤醒就绪")
             //   VoiceManager.TTstart("唤醒引擎准备就绪")//百度
               xunfeiTTs.start("唤醒引擎准备就绪")//讯飞
            }

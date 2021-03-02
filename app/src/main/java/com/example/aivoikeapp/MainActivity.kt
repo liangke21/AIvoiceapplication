@@ -1,8 +1,6 @@
 package com.example.aivoikeapp
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,8 +11,7 @@ import com.example.lib_base.base.BaseActitvity
 import com.example.lib_base.base.adapter.BasepagerAdapter
 import com.example.lib_base.helper.ARouterHelper
 import com.example.lib_base.utils.L
-import com.yanzhenjie.permission.AndPermission
-import com.yanzhenjie.permission.runtime.Permission
+import com.yanzhenjie.permission.Action
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -42,7 +39,23 @@ class MainActivity : BaseActitvity() {
     override fun initView() {
 
         //申请权限
-        requestPermissions()
+
+        if (chalkPermission(android.Manifest.permission.RECORD_AUDIO)){
+            L.e("有权限")
+            linkService()
+        }else{
+            requestpermission(arrayOf(android.Manifest.permission.RECORD_AUDIO)
+            ) {
+                L.e("没权限11")
+                linkService()
+            }
+        }
+      /*  //窗口权限
+        if (!checkWindowPermission()){
+            requestwindowPermission()
+        }
+*/
+
 //设置ViewPager
         initPagerData()
 //ViewPager数据参数
@@ -112,7 +125,7 @@ class MainActivity : BaseActitvity() {
 
     }
 
-    //申请权限
+   /* //申请权限
     private fun requestPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //当前版本要大于等于23版本
 
@@ -124,14 +137,13 @@ class MainActivity : BaseActitvity() {
                     .permission(Permission.RECORD_AUDIO)
                     .onGranted { linkService() }
                     .start()
-                requestPermissions()
             }
 
         } else {
             linkService()
         }
 
-    }
+    }*/
 
     //连接服务
     private fun linkService() {
