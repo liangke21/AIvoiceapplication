@@ -2,6 +2,7 @@ package com.example.aivoikeapp.adapter
 
 import com.example.aivoikeapp.R
 import com.example.aivoikeapp.data.ChatLis
+import com.example.aivoikeapp.entity.AppConstanst
 import com.example.lib_base.base.adapter.CommonAdapter
 import com.example.lib_base.base.adapter.CommonViewHolder
 
@@ -14,10 +15,7 @@ class ChatListAdapter(
     mList: List<ChatLis>
 
 ) : CommonAdapter<ChatLis>(mList, object : OnBMoreindDataListener<ChatLis> {
-    //会话类型
-    private val typeMineText = 0
-    private val typeAiText = 1
-    private val typeAiWeather = 2
+
 
     override fun onBindViewHolder(
         model: ChatLis,
@@ -25,14 +23,22 @@ class ChatListAdapter(
         type: Int,
         position: Int
     ) {
+        when (type) {
+            AppConstanst.TYPE_MINE_TEXT -> viewHolder.setText(R.id.tv_main_text, model.text)
+            AppConstanst.TYPE_AI_TEXT -> viewHolder.setText(R.id.tv_ai_text, model.text)
+            AppConstanst.TYPE_AI_WEATHER -> {
+
+            }
+        }
+
 
     }
 
     override fun getLayoutId(type: Int): Int {
         return when (type) {
-            typeMineText -> R.layout.layout_main_text
-            typeAiText -> R.layout.layout_ai_text
-            typeAiWeather -> R.layout.layout_ai_weather
+            AppConstanst.TYPE_MINE_TEXT -> R.layout.layout_main_text
+            AppConstanst.TYPE_AI_TEXT -> R.layout.layout_ai_text
+            AppConstanst.TYPE_AI_WEATHER -> R.layout.layout_ai_weather
             else -> 0
         }
     }
@@ -40,7 +46,7 @@ class ChatListAdapter(
     override fun getItemViewType(position: Int): Int {
         return mList[position].type
     }
-}) {
+})
 
 
-}
+

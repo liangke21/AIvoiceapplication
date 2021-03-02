@@ -18,5 +18,7 @@ data class MainListData(
 
 data class ChatLis(
     val type: Int,//回话类型
-    val text: String //文本
-)
+
+){
+   lateinit var  text: String //文本
+}

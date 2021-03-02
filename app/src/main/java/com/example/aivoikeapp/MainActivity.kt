@@ -40,18 +40,19 @@ class MainActivity : BaseActitvity() {
 
         //申请权限
 
-        if (chalkPermission(android.Manifest.permission.RECORD_AUDIO)){
+        if (chalkPermission(android.Manifest.permission.RECORD_AUDIO)) {
             L.e("有权限")
             linkService()
-        }else{
-            requestpermission(arrayOf(android.Manifest.permission.RECORD_AUDIO)
+        } else {
+            requestpermission(
+                arrayOf(android.Manifest.permission.RECORD_AUDIO)
             ) {
                 L.e("没权限11")
                 linkService()
             }
         }
         //窗口权限
-        if (!checkWindowPermission()){
+        if (!checkWindowPermission()) {
             requestwindowPermission(packageName)
         }
 
@@ -125,25 +126,25 @@ class MainActivity : BaseActitvity() {
 
     }
 
-   /* //申请权限
-    private fun requestPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //当前版本要大于等于23版本
+    /* //申请权限
+     private fun requestPermissions() {
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //当前版本要大于等于23版本
 
-            if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) { //判断有没有这个权限权限
-                linkService()
-            } else {
-                AndPermission.with(this)
-                    .runtime()
-                    .permission(Permission.RECORD_AUDIO)
-                    .onGranted { linkService() }
-                    .start()
-            }
+             if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) { //判断有没有这个权限权限
+                 linkService()
+             } else {
+                 AndPermission.with(this)
+                     .runtime()
+                     .permission(Permission.RECORD_AUDIO)
+                     .onGranted { linkService() }
+                     .start()
+             }
 
-        } else {
-            linkService()
-        }
+         } else {
+             linkService()
+         }
 
-    }*/
+     }*/
 
     //连接服务
     private fun linkService() {

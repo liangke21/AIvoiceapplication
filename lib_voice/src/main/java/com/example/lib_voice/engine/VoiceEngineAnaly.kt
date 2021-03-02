@@ -20,21 +20,21 @@ object VoiceEngineAnaly {
     private lateinit var mOnNluResultListener: OnNluResultListener
 
     //分析结果
-    fun analyzeNlu(nlu:JSONObject,mOnNluResultListener: OnNluResultListener){
+    fun analyzeNlu(nlu: JSONObject, mOnNluResultListener: OnNluResultListener) {
 
         this.mOnNluResultListener = mOnNluResultListener
         //用户说的话
         val rawText = nlu.optString("raw_text")
-        Log.i(TAG,"rawText:${ rawText}")
+        Log.i(TAG, "rawText:${rawText}")
 
         //解析result
 
-        var result =nlu.optJSONArray("results") ?: return
+        var result = nlu.optJSONArray("results") ?: return
 
         val nluResultLength = result.length()
 
-        when{
-            nluResultLength <= 0 ->   xunfeiTTs.start(WordsTools.wakeupWords())
+        when {
+            nluResultLength <= 0 -> 0//  xunfeiTTs.start(WordsTools.wakeupWords())
             //单条命中
             result.length() == 1 -> analyzeNluSingle(result[0] as JSONObject)
         }
@@ -45,8 +45,8 @@ object VoiceEngineAnaly {
         val intent = result.optString("intent")//意图
         val slots = result.optJSONObject("slots")//插槽
 
-        when(domain){
-            NluWords.NLU_WEATHER ->{
+        when (domain) {
+            NluWords.NLU_WEATHER -> {
                 // 获取其他类型
             }
 

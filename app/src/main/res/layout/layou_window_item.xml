@@ -8,11 +8,16 @@
         android:layout_height="match_parent"
         android:alpha="0.5"
         android:background="@android:color/darker_gray"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mChatListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
-
+</LinearLayout>
 </RelativeLayout>
