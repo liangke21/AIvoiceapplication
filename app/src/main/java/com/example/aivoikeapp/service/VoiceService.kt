@@ -6,14 +6,17 @@ import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.core.os.postDelayed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.aivoikeapp.R
 import com.example.aivoikeapp.adapter.ChatListAdapter
 import com.example.aivoikeapp.data.ChatLis
 import com.example.aivoikeapp.entity.AppConstanst
 import com.example.lib_base.helper.NotificationHelper
+import com.example.lib_base.helper.SoundPoolHelper
 import com.example.lib_base.helper.WinfowHelper
 import com.example.lib_base.utils.L
 import com.example.lib_voice.TTs.VoiceTTs
@@ -37,6 +40,8 @@ class VoiceService : Service(), OnNluResultListener {
 
     private lateinit var mFullwindowView: View
     private lateinit var mChatListView: RecyclerView
+    private lateinit var mLottieView: LottieAnimationView
+    private lateinit var tvVoiceTips: TextView
     private val mList = ArrayList<ChatLis>()
     private lateinit var mChatListAdapter: ChatListAdapter
 
@@ -90,6 +95,8 @@ class VoiceService : Service(), OnNluResultListener {
         WinfowHelper.initHelper(this)//窗口初始化
         mFullwindowView = WinfowHelper.getView(R.layout.layou_window_item)
         mChatListView = mFullwindowView.findViewById<RecyclerView>(R.id.mChatListView)
+        mLottieView = mFullwindowView.findViewById<LottieAnimationView>(R.id.mLottieView)
+        tvVoiceTips = mFullwindowView.findViewById<TextView>(R.id.tvVoiceTips)
         mChatListView.layoutManager = LinearLayoutManager(this)
         mChatListAdapter = ChatListAdapter(mList)
         mChatListView.adapter = mChatListAdapter
@@ -109,7 +116,7 @@ class VoiceService : Service(), OnNluResultListener {
 
             override fun asrStopSpeak() {
                 L.i("结束说话")
-            //    hideWindow()//隐藏窗口
+                //    hideWindow()//隐藏窗口
             }
 
             override fun wakeUpSuccess(result: JSONObject) {
@@ -121,28 +128,15 @@ class VoiceService : Service(), OnNluResultListener {
                     // 唤醒词
                     val word = result.optString("word")
                     if (word == "二花二花") {
-                        showWindoW()//显示窗口
-                        //应答
-                        val wakeupText = WordsTools.wakeupWords()
-                        addMineText(wakeupText)
-                        //百度应答
-                         VoiceManager.TTstart(wakeupText,object : VoiceTTs.OnTTSResultListener{
-                              override fun ttsEnd() {
-                                  //百度识别
-                                  VoiceManager.startAsr()
-                              }
-                          })
-                       /* //讯飞应答
-                        xunfeiTTs.start(wakeupText,
-                            object : xunfeiTTs.XFOnTTSResultListener {
-                                override fun ttsEnd() {
-                                    //百度识别
-                                    VoiceManager.startAsr()
-                                }
-                            })*/
+
+                        wakeUpFix()
 
                     }
                 }
+            }
+
+            override fun updateUserText(text: String) {
+                updateTipe(text)
             }
 
             override fun asrREsult(result: JSONObject) {
@@ -154,6 +148,7 @@ class VoiceService : Service(), OnNluResultListener {
             override fun nluResult(nlu: JSONObject) {
                 L.i("---------------------result-------------------------------")
                 L.i("识别出的Json结果:  $nlu")
+                addMineText(nlu.optString("raw_text"))
                 addAiText(nlu.toString())
                 //this@VoiceService 是在这个类里面实现了
                 VoiceEngineAnaly.analyzeNlu(nlu, this@VoiceService)
@@ -161,10 +156,37 @@ class VoiceService : Service(), OnNluResultListener {
 
             override fun voiceError(texe: String) {
                 L.e("发生错误${texe}")
-            //    hideWindow()//隐藏窗口
+                //    hideWindow()//隐藏窗口
             }
 
         })
+    }
+
+    /**
+     * 唤醒成功之后的操作
+     */
+    private fun wakeUpFix() {
+        showWindoW()//显示窗口
+        updateTipe("正在聆听...")
+        SoundPoolHelper.play(R.raw.record_start)
+        //应答
+        val wakeupText = WordsTools.wakeupWords()
+        addAiText(wakeupText)
+        //百度应答
+        VoiceManager.TTstart(wakeupText, object : VoiceTTs.OnTTSResultListener {
+            override fun ttsEnd() {
+                //百度识别
+                VoiceManager.startAsr()
+            }
+        })
+        /* //讯飞应答
+         xunfeiTTs.start(wakeupText,
+             object : xunfeiTTs.XFOnTTSResultListener {
+                 override fun ttsEnd() {
+                     //百度识别
+                     VoiceManager.startAsr()
+                 }
+             })*/
     }
 
     private val mHandler = Handler()
@@ -172,6 +194,7 @@ class VoiceService : Service(), OnNluResultListener {
     //显示窗口
     private fun showWindoW() {
         L.i("=====显示窗口=====")
+        mLottieView.playAnimation()//播放
         WinfowHelper.show(mFullwindowView)
     }
 
@@ -180,6 +203,7 @@ class VoiceService : Service(), OnNluResultListener {
         L.i("=====隐藏窗口=====")
         mHandler.postDelayed({
             WinfowHelper.hide(mFullwindowView)
+            mLottieView.pauseAnimation()//暂停
         }, 2 * 1000)
 
     }
@@ -217,5 +241,11 @@ class VoiceService : Service(), OnNluResultListener {
         mChatListAdapter.notifyItemInserted(mList.size - 1)//局部刷新
     }
 
+
+    //更新提示语
+
+    private fun updateTipe(text: String) {
+        tvVoiceTips.text = text
+    }
 
 }

@@ -50,6 +50,8 @@ dependencies {
     api(Dependencies.VIEWPAGER)
     //谷歌材料库
     api(Dependencies.MATERIAL)
+    //lottie动画
+    api(Dependencies.LOTTIE)
 
     api(project(":lib_network"))
     api(project(":lib_voice"))

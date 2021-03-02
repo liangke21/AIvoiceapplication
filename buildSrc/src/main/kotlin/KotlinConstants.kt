@@ -46,6 +46,8 @@ object Dependencies{
     const val VIEWPAGER = "com.zhy:magic-viewpager:1.0.1"
    //谷歌材料库
     const val MATERIAL = "com.google.android.material:material:1.0.0"
+    //lottie动画
+    const val LOTTIE = "com.airbnb.android:lottie:3.4.0"
 
 }
 

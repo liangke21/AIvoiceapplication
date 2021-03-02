@@ -27,6 +27,10 @@
 
     <color name="colorAppDeveloper">#d81e06</color>
 
+    <!--窗口颜色-->
     <color name="colorWindowBg">#37000000</color>
+
+
+
 
 </resources>

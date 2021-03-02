@@ -7,18 +7,25 @@ import org.json.JSONObject
  * 时间: 2021/2/24 9:12
  * 描述: 语音识别接口
  */
-interface  OnAsrResuLtListener {
+interface OnAsrResuLtListener {
 
     //唤醒准备就绪
     fun wakeUpReady()
+
     //开始说话
     fun asrSrartSpeak()
 
 
     //停止说话
     fun asrStopSpeak()
+
     //唤醒成功
-    fun wakeUpSuccess(result:JSONObject)
+    fun wakeUpSuccess(result: JSONObject)
+
+    //更新话术
+
+    fun updateUserText(text: String)
+
 
     //在线识别结果
 
@@ -26,8 +33,8 @@ interface  OnAsrResuLtListener {
 
     //意义识别结果
 
-    fun nluResult(nlu:JSONObject)
+    fun nluResult(nlu: JSONObject)
 
     //错误
-    fun voiceError(texe:String)
+    fun voiceError(texe: String)
 }

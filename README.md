@@ -10,7 +10,7 @@ kotlin-gradle-dsl脚本
  
  ARouter:软路由跳转
   
- Kotlin : 封装Activity,Log.日志,Fragment
+ Kotlin : 封装Activity,Log.日志,Fragment,权限封装,SoundPool封装
  
  AndPermission : 权限请求
 ##初始化
@@ -32,3 +32,5 @@ Retrofit网络矿建
 ViewPager
 WindowManager 窗口
 RecyclerView:万能的适配器的封装  
+Lottie动画
+
