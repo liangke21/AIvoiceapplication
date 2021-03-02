@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
  * 时间: 2021/2/18 16:40
  * 描述: 万能适配器RecyclerView
  */
-class CommonAdapter<T>:RecyclerView.Adapter<CommonViewHolder> {
+open class CommonAdapter<T>:RecyclerView.Adapter<CommonViewHolder> {
 
     //数据
     private  var mList: List<T>

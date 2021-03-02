@@ -2,8 +2,17 @@ package com.example.aivoikeapp.service
 
 import android.app.Service
 import android.content.Intent
+import android.os.Handler
 import android.os.IBinder
+import android.view.View
+import androidx.core.os.postDelayed
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.aivoikeapp.R
+import com.example.aivoikeapp.adapter.ChatListAdapter
+import com.example.aivoikeapp.data.ChatLis
 import com.example.lib_base.helper.NotificationHelper
+import com.example.lib_base.helper.WinfowHelper
 import com.example.lib_base.utils.L
 import com.example.lib_voice.TTs.VoiceTTs
 import com.example.lib_voice.engine.VoiceEngineAnaly
@@ -14,6 +23,7 @@ import com.example.lib_voice.xunfeiTTS.xunfeiTTs
 import com.imooc.lib_voice.words.WordsTools
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 作者: 13967
@@ -28,6 +38,7 @@ class VoiceService : Service(), OnNluResultListener {
 
 
     override fun onCreate() {
+        L.i("${TGA}:初始化")
         super.onCreate()
         L.i("${TGA}:语音启动服务")
         initService()
@@ -40,7 +51,6 @@ class VoiceService : Service(), OnNluResultListener {
 
         //讯飞tts语音
         xunfeiTTs.initialled(this)
-
 
 
     }
@@ -64,74 +74,107 @@ class VoiceService : Service(), OnNluResultListener {
         startForeground(1000, NotificationHelper.bindVoiceService("正在运行"))
     }
 
+    private lateinit var mFullwindowView: View
+    private lateinit var mChatListView: RecyclerView
+    private val mList = ArrayList<ChatLis>()
+
     //初始化语音服务
-  private  fun initCoreVoiceService(){
-        L.i("${TGA}:语音启动服务2")
-       VoiceManager.initManager(this,object : OnAsrResuLtListener{
+    private fun initCoreVoiceService() {
 
-           override fun wakeUpReady() {
-              L.i("${TGA}:唤醒就绪")
-            //   VoiceManager.TTstart("唤醒引擎准备就绪")//百度
-              xunfeiTTs.start("唤醒引擎准备就绪")//讯飞
-           }
+        WinfowHelper.initHelper(this)//窗口初始化
+        mFullwindowView = WinfowHelper.getView(R.layout.layou_window_item)
+        mChatListView = mFullwindowView.findViewById<RecyclerView>(R.id.mChatListView)
+        mChatListView.layoutManager = LinearLayoutManager(this)
+        mChatListView.adapter = ChatListAdapter(mList)
 
-           override fun asrSrartSpeak() {
-               L.i("开始说话")
-           }
 
-           override fun asrStopSpeak() {
-               L.i("结束说话")
-           }
+        VoiceManager.initManager(this, object : OnAsrResuLtListener {
 
-           override fun wakeUpSuccess(result: JSONObject) {
-               L.i("唤醒成功: ${result}")
-               //当唤醒词是二花的时候
-               val errorCode = result.optInt("errorCode")
-               //唤醒成功
-               if (errorCode==0){
-                  // 唤醒词
-                   val word = result.optString("word")
-                   if (word == "二花二花"){
-                       //应答
-                       //百度应答
-                     /* VoiceManager.TTstart(WordsTools.wakeupWords(),object : VoiceTTs.OnTTSResultListener{
-                           override fun ttsEnd() {
-                               //百度识别
-                               VoiceManager.startAsr()
-                           }
-                       })*/
-                       //讯飞应答
-                     xunfeiTTs.start(WordsTools.wakeupWords(),object : xunfeiTTs.XFOnTTSResultListener{
-                          override fun ttsEnd() {
-                              //百度识别
-                              VoiceManager.startAsr()
-                          }
-                      })
+            override fun wakeUpReady() {
+                L.i("${TGA}:唤醒就绪")
+                //   VoiceManager.TTstart("唤醒引擎准备就绪")//百度
+                xunfeiTTs.start("唤醒引擎准备就绪")//讯飞
+            }
 
-                   }
-               }
-           }
+            override fun asrSrartSpeak() {
+                L.i("开始说话")
+            }
 
-           override fun asrREsult(result: JSONObject) {
-               L.i("---------------------result-------------------------------")
-               L.i("识别结果: $result")
+            override fun asrStopSpeak() {
+                L.i("结束说话")
+                hideWindow()//隐藏窗口
+            }
 
-           }
+            override fun wakeUpSuccess(result: JSONObject) {
+                L.i("唤醒成功: ${result}")
+                //当唤醒词是二花的时候
+                val errorCode = result.optInt("errorCode")
+                //唤醒成功
+                if (errorCode == 0) {
+                    // 唤醒词
+                    val word = result.optString("word")
+                    if (word == "二花二花") {
+                        showWindoW()//显示窗口
+                        //应答
+                        //百度应答
+                        /* VoiceManager.TTstart(WordsTools.wakeupWords(),object : VoiceTTs.OnTTSResultListener{
+                              override fun ttsEnd() {
+                                  //百度识别
+                                  VoiceManager.startAsr()
+                              }
+                          })*/
+                        //讯飞应答
+                        xunfeiTTs.start(WordsTools.wakeupWords(),
+                            object : xunfeiTTs.XFOnTTSResultListener {
+                                override fun ttsEnd() {
+                                    //百度识别
+                                    VoiceManager.startAsr()
+                                }
+                            })
 
-           override fun nluResult(nlu: JSONObject) {
-               L.i("---------------------result-------------------------------")
-               L.i("识别出的Json结果:  $nlu")
-               //this@VoiceService 是在这个类里面实现了
-               VoiceEngineAnaly.analyzeNlu(nlu,this@VoiceService)
-           }
+                    }
+                }
+            }
 
-           override fun voiceError(texe: String) {
-               L.e("发生错误${texe}")
-           }
+            override fun asrREsult(result: JSONObject) {
+                L.i("---------------------result-------------------------------")
+                L.i("识别结果: $result")
 
-       })
+            }
+
+            override fun nluResult(nlu: JSONObject) {
+                L.i("---------------------result-------------------------------")
+                L.i("识别出的Json结果:  $nlu")
+                //this@VoiceService 是在这个类里面实现了
+                VoiceEngineAnaly.analyzeNlu(nlu, this@VoiceService)
+            }
+
+            override fun voiceError(texe: String) {
+                L.e("发生错误${texe}")
+                hideWindow()//隐藏窗口
+            }
+
+        })
     }
-  //查询天气
+
+    private val mHandler = Handler()
+
+    //显示窗口
+    private fun showWindoW() {
+        L.i("=====显示窗口=====")
+        WinfowHelper.show(mFullwindowView)
+    }
+
+    //隐藏窗口
+    private fun hideWindow() {
+        L.i("=====隐藏窗口=====")
+        mHandler.postDelayed({
+            WinfowHelper.hide(mFullwindowView)
+        }, 2 * 1000)
+
+    }
+
+    //查询天气
     override fun queryWeather() {
 
     }

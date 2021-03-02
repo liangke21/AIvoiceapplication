@@ -66,7 +66,7 @@ abstract class BaseActitvity : AppCompatActivity() {
     }
 
     //申请权限
-    protected fun requestwindowPermission() {
+    protected fun requestwindowPermission(packageName:String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             startActivityForResult(
                 Intent(
@@ -81,8 +81,8 @@ abstract class BaseActitvity : AppCompatActivity() {
     protected fun chalkPermission(permission: String): Boolean {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //当前版本要大于等于23版本
-          //  return   checkSelfPermission(permission) == PackageManager.PERMISSION_DENIED
-            return   checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+            //  return   checkSelfPermission(permission) == PackageManager.PERMISSION_DENIED
+            return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
         }
         return true
     }

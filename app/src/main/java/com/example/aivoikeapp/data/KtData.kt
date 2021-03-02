@@ -8,8 +8,15 @@ package com.example.aivoikeapp.data
  * 描述:  Kotlin Data 数据
  */
 
-data class MainListData( val title: String,
-                         val icon: Int,
-                         val color: Int,){
+data class MainListData(
+    val title: String,
+    val icon: Int,
+    val color: Int,
+) {
 
 }
+
+data class ChatLis(
+    val type: Int,//回话类型
+    val text: String //文本
+)

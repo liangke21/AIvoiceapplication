@@ -50,11 +50,11 @@ class MainActivity : BaseActitvity() {
                 linkService()
             }
         }
-      /*  //窗口权限
+        //窗口权限
         if (!checkWindowPermission()){
-            requestwindowPermission()
+            requestwindowPermission(packageName)
         }
-*/
+
 
 //设置ViewPager
         initPagerData()
