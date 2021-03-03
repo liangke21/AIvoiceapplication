@@ -22,17 +22,17 @@ kotlin-gradle-dsl脚本
  
  ## 百度AI语音
  
- TTS 在线语音合成
- 语音唤醒
- 语音识别
+ - TTS 在线语音合成
+ - 语音唤醒
+ - 语音识别
 ## 网络框架 
-Retrofit网络矿建
-拦截器
+ - Retrofit网络矿建
+ - 拦截器
 ## UI
-ViewPager
-WindowManager 窗口
-RecyclerView:万能的适配器的封装  
-Lottie动画
+ - ViewPager
+ - WindowManager 窗口
+ - RecyclerView:万能的适配器的封装  
+ - Lottie动画
 ## App应用采集
  - 加载所有的app
  - 根据名称卸载app

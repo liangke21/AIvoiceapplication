@@ -6,6 +6,11 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.example.lib_base.R
 import com.example.lib_base.helper.`fun`.data.AppData
 import com.example.lib_base.utils.L
 import java.util.ArrayList
@@ -23,7 +28,11 @@ object AppHelper {
     //包管理器
     private lateinit var pm: PackageManager
 
+    //所有应用
     private val mAllAPPList = ArrayList<AppData>()
+
+    //所有View
+    val mAllViewList = ArrayList<View>()
 
     //初始化
     fun initHelper(mContext: Context) {
@@ -58,7 +67,59 @@ object AppHelper {
 
         L.e("手机里的应用:${mAllAPPList}")
 
+        initPageView()
+
     }
+
+    private fun initPageView() {
+        for (i in 0 until getPageSize()) {
+            // -> FrameLayout
+            val rootView =
+                View.inflate(mContext, R.layout.layout_app_manager_item, null) as ViewGroup
+            //填充数据
+            // -> 第一层 线性布局
+            for (j in 0 until rootView.childCount) {
+                // -> 第二层 六个线性布局
+                val childX = rootView.getChildAt(j) as ViewGroup
+                //  L.e("$j")
+                // -> 第三层 四个线性布局
+                for (k in 0 until childX.childCount) {
+                    // -> 第四层 两个View ImageView TextView
+                    val child = childX.getChildAt(k) as ViewGroup
+
+                    val iv = child.getChildAt(0) as ImageView//图片
+                    val tv = child.getChildAt(1) as TextView//文本
+                    //计算你当前的下标
+                    val index = i * 24 + j * 4 + k
+                  //  L.e("$index")
+                    if (index < mAllAPPList.size) {
+                        //获取数据
+                        val data = mAllAPPList[index]
+                        tv.text = data.appName
+                        iv.setImageDrawable(data.appIcon)
+                        //点击事件
+                        child.setOnClickListener {
+                            Starttheapp(data.appName)
+                        }
+                    }
+                }
+            }
+            mAllViewList.add(rootView)
+        }
+    }
+
+    //获取页面数量
+    fun getPageSize(): Int {
+        return mAllAPPList.size / 24 + 1
+    }
+
+    //获取非系统应用
+    fun getNotSystemApp(): List<AppData> {
+        return mAllAPPList.filter {
+            !it.isSystemApp
+        }
+    }
+
 
     //启动APP
     fun Starttheapp(appName: String): Boolean {
