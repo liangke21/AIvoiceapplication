@@ -10,6 +10,7 @@ import com.example.aivoikeapp.service.VoiceService
 import com.example.lib_base.base.BaseActitvity
 import com.example.lib_base.base.adapter.BasepagerAdapter
 import com.example.lib_base.helper.ARouterHelper
+import com.example.lib_base.helper.`fun`.AppHelper
 import com.example.lib_base.utils.L
 import com.yanzhenjie.permission.Action
 import kotlinx.android.synthetic.main.activity_main.*
@@ -61,6 +62,7 @@ class MainActivity : BaseActitvity() {
         initPagerData()
 //ViewPager数据参数
         initPagerView()
+
     }
 
     //设置ViewPager

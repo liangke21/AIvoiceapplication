@@ -4,6 +4,7 @@ import android.app.IntentService
 import android.content.Intent
 import com.example.lib_base.helper.NotificationHelper
 import com.example.lib_base.helper.SoundPoolHelper
+import com.example.lib_base.helper.`fun`.AppHelper
 import com.example.lib_base.utils.L
 import com.example.lib_base.utils.SpUtils
 import com.example.lib_voice.manager.VoiceManager
@@ -37,6 +38,8 @@ class InitService : IntentService(InitService::class.java.simpleName) {
         WordsTools.initTools(this)
         //播放初始化
         SoundPoolHelper.init(this)
+        //采集应用初始化
+        AppHelper.initHelper(this)
     }
 
     override fun onDestroy() {
