@@ -45,12 +45,45 @@ object VoiceEngineAnaly {
         val intent = result.optString("intent")//意图
         val slots = result.optJSONObject("slots")//插槽
 
-        when (domain) {
-            NluWords.NLU_WEATHER -> {
-                // 获取其他类型
-            }
+        slots?.let {
+            when (domain) {
+                NluWords.NLU_APP -> {
+                    when (intent) {
+                        NluWords.INTENT_OPEN_APP, NluWords.INTENT_UNINSTALL_APP -> {
+                            val userAppName = it.optJSONArray("user_app_name")
+                            userAppName?.let { AppName ->
+                                if (AppName.length() > 0) {
+                                    val obj = AppName[0] as JSONObject
+                                    val Word = obj.optString("word")
 
+                                    if (intent == NluWords.INTENT_OPEN_APP) {
+                                        mOnNluResultListener.openApp(Word)
+                                    } else {
+                                        mOnNluResultListener.unInstallApp(Word)
+                                    }
+
+
+                                } else {
+                                    //没有那个应用
+                                    mOnNluResultListener.nlnError()
+                                }
+                            }
+
+                        }
+                        else -> {
+                            mOnNluResultListener.nlnError()
+                        }
+                    }
+
+
+                }
+                else -> {
+                    //什么也没有
+                    mOnNluResultListener.nlnError()
+                }
+            }
         }
+
 
     }
 }

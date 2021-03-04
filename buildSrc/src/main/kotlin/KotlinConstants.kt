@@ -54,7 +54,7 @@ object Dependencies{
 //Module配置
 object ModuleConfig{
     //是否App
-    const val isApp =true
+    const val isApp =false
 
     //包名
     const val MODULE_APP_MANAGER= "com.example.module_app_manager"

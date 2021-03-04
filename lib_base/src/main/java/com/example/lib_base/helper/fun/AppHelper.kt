@@ -91,7 +91,7 @@ object AppHelper {
                     val tv = child.getChildAt(1) as TextView//文本
                     //计算你当前的下标
                     val index = i * 24 + j * 4 + k
-                  //  L.e("$index")
+                    //  L.e("$index")
                     if (index < mAllAPPList.size) {
                         //获取数据
                         val data = mAllAPPList[index]
@@ -149,8 +149,10 @@ object AppHelper {
 
     //卸载APP基类
     private fun intenUnInstallApp(packageName: String) {
-        val intent = Intent(Intent.ACTION_DIAL)//系统行动指令 //调用系统卸载
-        intent.data = Uri.parse("package:${packageName}")
+        val uri = Uri.parse("package:${packageName}")
+        val intent = Intent(Intent.ACTION_DELETE)//系统行动指令 //调用系统卸载
+        intent.data = uri
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK  //请出活动
         mContext.startActivity(intent)
     }
 

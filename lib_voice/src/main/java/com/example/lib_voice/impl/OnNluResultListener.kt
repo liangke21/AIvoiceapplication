@@ -7,6 +7,17 @@ package com.example.lib_voice.impl
  */
 interface OnNluResultListener {
 
+    //==================App 操作====================
+    //打开APP
+    fun openApp(AppName: String)
+
+    //卸载App
+    fun unInstallApp(AppName: String)
+
+    //查询天气
     fun queryWeather()
 
+
+    //听不懂你的话
+    fun nlnError()
 }

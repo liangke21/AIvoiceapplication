@@ -28,6 +28,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/><!--显示其他应用的上层权限-->
+    
+    <uses-permission android:name="android.permission.DELETE_PACKAGES"/><!--直接删除,不是系统软件不能直接删除-->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES"/><!--删除软件-->
+    
     <application>
         <service android:name=".service.InitService" />
 

@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -18,6 +19,7 @@ import com.example.aivoikeapp.entity.AppConstanst
 import com.example.lib_base.helper.NotificationHelper
 import com.example.lib_base.helper.SoundPoolHelper
 import com.example.lib_base.helper.WinfowHelper
+import com.example.lib_base.helper.`fun`.AppHelper
 import com.example.lib_base.utils.L
 import com.example.lib_voice.TTs.VoiceTTs
 import com.example.lib_voice.engine.VoiceEngineAnaly
@@ -208,9 +210,41 @@ class VoiceService : Service(), OnNluResultListener {
 
     }
 
+    override fun openApp(AppName: String) {
+        if (!TextUtils.isEmpty(AppName)) {//判断不为空
+            L.i("Open App $AppName")
+            val isOpen = AppHelper.Starttheapp(AppName)//打开app
+            if (isOpen) {
+                VoiceManager.TTstart("正在为你打开$AppName")
+            } else {
+                VoiceManager.TTstart("很抱歉,无法为你打开$AppName")
+            }
+        }
+        hideWindow()//隐藏窗口
+    }
+
+    override fun unInstallApp(AppName: String) {
+        if (!TextUtils.isEmpty(AppName)) {//判断不为空
+            L.i("unInstall App $AppName")
+            val isUninstall = AppHelper.Uninstallapp(AppName)
+            if (isUninstall) {
+                VoiceManager.TTstart("正在为你卸载$AppName")
+            } else {
+                VoiceManager.TTstart("很抱歉,无法为你卸载$AppName")
+            }
+        }
+        hideWindow()
+    }
+
+
     //查询天气
     override fun queryWeather() {
 
+    }
+
+    //无法应答
+    override fun nlnError() {
+        VoiceManager.TTstart(WordsTools.noAnswerWords())
     }
 
     /**
@@ -242,7 +276,7 @@ class VoiceService : Service(), OnNluResultListener {
     }
 
 
-    //更新提示语
+//更新提示语
 
     private fun updateTipe(text: String) {
         tvVoiceTips.text = text
