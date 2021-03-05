@@ -1,5 +1,6 @@
 package com.example.lib_voice.engine
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.nfc.Tag
 import android.util.Log
 import com.example.lib_voice.impl.OnNluResultListener
@@ -49,36 +50,43 @@ object VoiceEngineAnaly {
             when (domain) {
                 NluWords.NLU_APP -> {
                     when (intent) {
-                        NluWords.INTENT_OPEN_APP, NluWords.INTENT_UNINSTALL_APP -> {
+                        NluWords.INTENT_OPEN_APP,
+                        NluWords.INTENT_UNINSTALL_APP,
+                        NluWords.INTENT_UPDATE_APP,
+                        NluWords.INTENT_DOWNLOAD_APP,
+                        NluWords.INTENT_SEARCH_APP,
+                        NluWords.INTENT_RECOMMEND_APP -> {
+                            //得到打开App的名称
                             val userAppName = it.optJSONArray("user_app_name")
-                            userAppName?.let { AppName ->
-                                if (AppName.length() > 0) {
-                                    val obj = AppName[0] as JSONObject
-                                    val Word = obj.optString("word")
-
-                                    if (intent == NluWords.INTENT_OPEN_APP) {
-                                        mOnNluResultListener.openApp(Word)
-                                    } else {
-                                        mOnNluResultListener.unInstallApp(Word)
+                            userAppName?.let { appName ->
+                                if (appName.length() > 0) {
+                                    val obj = appName[0] as JSONObject
+                                    val word = obj.optString("word")
+                                    when (intent) {
+                                        NluWords.INTENT_OPEN_APP -> mOnNluResultListener.openApp(
+                                            word
+                                        )
+                                        NluWords.INTENT_UNINSTALL_APP -> mOnNluResultListener.unInstallApp(
+                                            word
+                                        )
+                                        else -> mOnNluResultListener.otherApp(word)
                                     }
-
-
                                 } else {
-                                    //没有那个应用
+                                    Log.i(TAG,"没有任何插槽")
                                     mOnNluResultListener.nlnError()
                                 }
                             }
-
                         }
                         else -> {
+                            Log.i(TAG,"在app这个领域,我没有意图")
                             mOnNluResultListener.nlnError()
                         }
                     }
 
-
                 }
                 else -> {
-                    //什么也没有
+                    //什么领域也没有
+                    Log.i(TAG,"什么领域也没有")
                     mOnNluResultListener.nlnError()
                 }
             }

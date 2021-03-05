@@ -31,6 +31,9 @@ object AppHelper {
     //所有应用
     private val mAllAPPList = ArrayList<AppData>()
 
+    //所有商店包名
+    private lateinit var mAllMarkArray: Array<String>
+
     //所有View
     val mAllViewList = ArrayList<View>()
 
@@ -68,6 +71,8 @@ object AppHelper {
         L.e("手机里的应用:${mAllAPPList}")
 
         initPageView()
+
+        mAllMarkArray = mContext.resources.getStringArray(R.array.AppMarketArray)
 
     }
 
@@ -147,15 +152,6 @@ object AppHelper {
         return false
     }
 
-    //卸载APP基类
-    private fun intenUnInstallApp(packageName: String) {
-        val uri = Uri.parse("package:${packageName}")
-        val intent = Intent(Intent.ACTION_DELETE)//系统行动指令 //调用系统卸载
-        intent.data = uri
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK  //请出活动
-        mContext.startActivity(intent)
-    }
-
     //启动APP基类
     private fun intentApp(packageName: String) {
         val intent = pm.getLaunchIntentForPackage(packageName)//获取包名启动
@@ -166,11 +162,46 @@ object AppHelper {
 
     }
 
+    //卸载APP基类
+    private fun intenUnInstallApp(packageName: String) {
+        val uri = Uri.parse("package:${packageName}")
+        val intent = Intent(Intent.ACTION_DELETE)//系统行动指令 //调用系统卸载
+        intent.data = uri
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK  //请出活动
+        mContext.startActivity(intent)
+    }
+
+    //跳转应用市场
+    fun launcherAppStore(appName: String): Boolean {
+
+        mAllAPPList.forEach {
+            //如果你包含,说明你安装了应用商店
+            if (mAllMarkArray.contains(it.packNane)) {
+
+
+                if (mAllAPPList.size > 0) {//在有应用的情况下
+                    mAllAPPList.forEach { data -> //遍历所有应用
+                        if (data.appName == appName) { //启动那个应用
+                            intentAppStore(data.packNane, it.packNane)//通过包名启动app
+                            return true
+                        }
+
+                    }
+                }
+
+
+            }
+        }
+        return false
+    }
+
+
     //跳转应用商店
-    fun intentAppStore(packageName: String, markPackageName: String) {
-        val uri = Uri.parse("market://detaile?id=${packageName}")
+    private fun intentAppStore(packageName: String, markPackageName: String) {
+        val uri = Uri.parse("market://details?id=${packageName}")
         val intent = Intent(Intent.ACTION_VIEW, uri)//会根据用户的数据类型打开相应的Activity
         intent.setPackage(markPackageName)//跳转商店
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK  //请出活动
         mContext.startActivity(intent)
     }
 

@@ -14,6 +14,9 @@ interface OnNluResultListener {
     //卸载App
     fun unInstallApp(AppName: String)
 
+    //其他app
+    fun otherApp(AppName: String)
+
     //查询天气
     fun queryWeather()
 

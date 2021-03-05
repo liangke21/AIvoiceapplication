@@ -108,8 +108,8 @@ class VoiceService : Service(), OnNluResultListener {
 
             override fun wakeUpReady() {
                 L.i("${TGA}:唤醒就绪")
-                //   VoiceManager.TTstart("唤醒引擎准备就绪")//百度
-                xunfeiTTs.start("唤醒引擎准备就绪")//讯飞
+                addAiText("唤醒引擎准备就绪")//百度
+                //xunfeiTTs.start("唤醒引擎准备就绪")//讯飞
             }
 
             override fun asrSrartSpeak() {
@@ -151,7 +151,7 @@ class VoiceService : Service(), OnNluResultListener {
                 L.i("---------------------result-------------------------------")
                 L.i("识别出的Json结果:  $nlu")
                 addMineText(nlu.optString("raw_text"))
-                addAiText(nlu.toString())
+              //  addAiText(nlu.toString())  //显示josn 解析
                 //this@VoiceService 是在这个类里面实现了
                 VoiceEngineAnaly.analyzeNlu(nlu, this@VoiceService)
             }
@@ -173,9 +173,9 @@ class VoiceService : Service(), OnNluResultListener {
         SoundPoolHelper.play(R.raw.record_start)
         //应答
         val wakeupText = WordsTools.wakeupWords()
-        addAiText(wakeupText)
+        //    addAiText(wakeupText)
         //百度应答
-        VoiceManager.TTstart(wakeupText, object : VoiceTTs.OnTTSResultListener {
+        addAiText(wakeupText, object : VoiceTTs.OnTTSResultListener {
             override fun ttsEnd() {
                 //百度识别
                 VoiceManager.startAsr()
@@ -210,32 +210,47 @@ class VoiceService : Service(), OnNluResultListener {
 
     }
 
+    //打开app
     override fun openApp(AppName: String) {
         if (!TextUtils.isEmpty(AppName)) {//判断不为空
             L.i("Open App $AppName")
             val isOpen = AppHelper.Starttheapp(AppName)//打开app
             if (isOpen) {
-                VoiceManager.TTstart("正在为你打开$AppName")
+                addAiText("正在为你打开$AppName")
             } else {
-                VoiceManager.TTstart("很抱歉,无法为你打开$AppName")
+                addAiText("很抱歉,无法为你打开$AppName")
             }
         }
         hideWindow()//隐藏窗口
     }
 
+    //卸载app
     override fun unInstallApp(AppName: String) {
         if (!TextUtils.isEmpty(AppName)) {//判断不为空
             L.i("unInstall App $AppName")
             val isUninstall = AppHelper.Uninstallapp(AppName)
             if (isUninstall) {
-                VoiceManager.TTstart("正在为你卸载$AppName")
+                addAiText("正在为你卸载$AppName")
             } else {
-                VoiceManager.TTstart("很抱歉,无法为你卸载$AppName")
+                addAiText("很抱歉,无法为你卸载$AppName")
             }
         }
         hideWindow()
     }
 
+    override fun otherApp(AppName: String) {
+        L.i("跳转 App $AppName")
+        if (!TextUtils.isEmpty(AppName)) {
+            L.i("跳转 App $AppName")
+            val isUninstall = AppHelper.launcherAppStore(AppName)
+            if (isUninstall) {
+                addAiText("正在操作$AppName ")
+            } else {
+                addAiText("跳转错误WordsTools.noAnswerWords()")
+            }
+        }
+        hideWindow()
+    }
 
     //查询天气
     override fun queryWeather() {
@@ -244,7 +259,7 @@ class VoiceService : Service(), OnNluResultListener {
 
     //无法应答
     override fun nlnError() {
-        VoiceManager.TTstart(WordsTools.noAnswerWords())
+        addAiText(WordsTools.noAnswerWords())
     }
 
     /**
@@ -257,6 +272,7 @@ class VoiceService : Service(), OnNluResultListener {
         bean.text = text
         L.e("启动我的文本:${bean.toString()}")
         baseAddItem(bean)
+
     }
 
     /**
@@ -267,6 +283,15 @@ class VoiceService : Service(), OnNluResultListener {
         L.e("启动Ai文本:${bean.toString()}")
         bean.text = text
         baseAddItem(bean)
+        VoiceManager.TTstart(text)
+    }
+
+    private fun addAiText(text: String, mOnTTSResultListener: VoiceTTs.OnTTSResultListener) {
+        val bean = ChatLis(AppConstanst.TYPE_AI_TEXT)
+        L.e("启动Ai文本:${bean.toString()}")
+        bean.text = text
+        baseAddItem(bean)
+        VoiceManager.TTstart(text, mOnTTSResultListener)
     }
 
 
